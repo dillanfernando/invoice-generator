@@ -31,45 +31,9 @@ public class MainClass {
 		CommandLineParser parser = new DefaultParser();
 
 		// create the Options
-		Options options = new Options();
-		
-		
-		// Template location 
-		Option tempLoc = Option
-				.builder("t")
-				.longOpt("template")
-				.desc("Location of the template word document (default, invoice_template.docx)")
-				.hasArg(false)
-				.build();
-		options.addOption(tempLoc);
-		
-		Option period = Option
-				.builder("p")
-				.longOpt("period")
-				.desc("Invoicing period (w|b|m)")
-				.hasArgs()
-				.argName("w=weekly, b=biweekly, m=monthly")
-//				.required()
-				.build();
-		options.addOption(period);
-		
-		Option invNo = Option
-				.builder("i")
-				.longOpt("InvoiceNo")
-				.desc("New Invoice Number")
-				.hasArg()
-				.argName("InvNo")
-//				.required()
-				.build();
-		
-		
-		
-		
-		options.addOption(invNo);
-		
-	
-
 		try {
+			
+			Options options = getOptions();
 		    // parse the command line arguments
 		    CommandLine line = parser.parse( options, args );
 
@@ -84,6 +48,102 @@ public class MainClass {
 		catch( ParseException exp ) {
 		    System.out.println( "Unexpected exception:" + exp.getMessage() );
 		}
+	}
+	
+	
+	private static Options getOptions() {
+		
+		Options options = new Options();
+		
+		
+		// Template location 
+		Option tempLoc = Option
+				.builder("t")
+				.longOpt("template")
+				.desc("Location of the template word document (default, invoice_template.docx)")
+				.hasArg()
+				.argName("classpath : template word documwnt")
+				.build();
+		options.addOption(tempLoc);
+		
+		Option period = Option
+				.builder("p")
+				.longOpt("period")
+				.desc("Invoicing period (w|b|m)")
+				.hasArgs()
+				.argName("w=weekly, b=biweekly, m=monthly")
+//				.required()
+				.build();
+		options.addOption(period);
+		
+		Option startDate = Option
+				.builder("s")
+				.longOpt("startDate")
+				.desc("Start Date of the invoice. (default : Sunday of current week)")
+				.hasArg()
+				.argName("dd/mm/yyyy")
+//				.required()
+				.build();
+		options.addOption(startDate);
+		
+		Option hrs = Option
+				.builder("h")
+				.longOpt("hours")
+				.desc("Hrs worked/week (Default 40/wk)")
+				.hasArgs()
+				.numberOfArgs(4)
+				.argName("wk1,wk2,. (number of weeks)")
+//				.required()
+				.build();
+		options.addOption(hrs);
+		
+		Option rate = Option
+				.builder("r")
+				.longOpt("rate")
+				.desc("Hourly Rate")
+				.hasArg()
+				.argName("rate")
+//				.required()
+				.build();
+		options.addOption(rate);
+		
+		Option invNo = Option
+				.builder("i")
+				.longOpt("InvoiceNo")
+				.desc("New Invoice Number")
+				.hasArg()
+				.argName("InvNo")
+//				.required()
+				.build();
+		options.addOption(invNo);
+		
+		Option tax = Option
+				.builder("tax")
+				.longOpt("taxRate")
+				.desc("Tax Rate (default 5%)")
+				.hasArg()
+				.argName("tax rate")
+				.build();
+		options.addOption(tax);
+		
+		Option out = Option
+				.builder("o")
+				.longOpt("output")
+				.desc("Output folder (default current folder)")
+				.hasArg()
+				.argName("folder")
+				.build();
+		options.addOption(out);
+		
+		Option file = Option
+				.builder("f")
+				.longOpt("file")
+				.desc("Output File (default Inv_yyyyMMdd_invNo.docx)")
+				.hasArg()
+				.argName("file name")
+				.build();
+		options.addOption(file);
+		return options;
 	}
 
 }
